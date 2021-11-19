@@ -43,6 +43,10 @@ const filters = new SimpleSchema({
   "priceMax": {
     type: Number,
     optional: true
+  },
+  "productType": {
+    type: String,
+    optional: true
   }
 });
 
@@ -184,7 +188,16 @@ export default function applyProductFilters(context, productFilters) {
         }
       };
     }
-  } // end if productFilters
+  }
+  
+  // filter by archived
+  if (productFilters.productType !== undefined) {
+    selector = {
+      ...selector,
+      productType: productFilters.productType
+    };
+  }
+  // end if productFilters
 
   return selector;
 }
